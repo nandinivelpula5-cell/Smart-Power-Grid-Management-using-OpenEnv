@@ -1,0 +1,19 @@
+id: power-grid-env
+name: Smart Power Grid Environment
+
+observation_space:
+  areas: list
+  complaints: int
+  time: int
+
+action_space:
+  - type: restore
+    params: [area_id]
+  - type: ignore
+
+reward_range: [0.0, 1.0]
+
+tasks:
+  - easy
+  - medium
+  - hard
