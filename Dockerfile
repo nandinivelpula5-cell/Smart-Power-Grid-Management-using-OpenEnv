@@ -4,6 +4,6 @@ WORKDIR /app
 
 COPY . .
 
-RUN pip install flask
+RUN pip install fastapi uvicorn
 
-CMD ["python", "app.py"]
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "7860"]
