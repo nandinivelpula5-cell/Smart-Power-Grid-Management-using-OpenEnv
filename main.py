@@ -1,24 +1,18 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from env import PowerCutEnv
 
 app = FastAPI()
-
 env = PowerCutEnv()
 
 @app.post("/reset")
 def reset():
-    state = env.reset()
-    return {"state": state}
+    return env.reset()
 
 @app.post("/step")
-def step(action: int):
-    state, reward, done = env.step(action)
-    return {
-        "state": state,
-        "reward": reward,
-        "done": done
-    }
+async def step(request: Request):
+    data = await request.json()
+    action = data.get("action", 0)
 
-@app.get("/state")
-def get_state():
-    return {"state": env.state()}
+    state, reward, done = env.step(action)
+
+    return {"state": state, "reward": reward, "done": done}
